@@ -1,0 +1,7 @@
+__pycache__/
+*.bin
+*.pt
+*.gguf
+data/
+runs/
+.env

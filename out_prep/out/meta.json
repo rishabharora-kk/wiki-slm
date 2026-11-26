@@ -1,0 +1,10 @@
+{
+ "tokens": {
+  "train": 4880544987,
+  "val": 24383434,
+  "test": 24234198
+ },
+ "shards": 10,
+ "tokenizer": "HuggingFaceTB/SmolLM2-135M",
+ "dataset": "wikimedia/wikipedia 20231101.en"
+}

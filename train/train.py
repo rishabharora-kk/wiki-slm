@@ -1,6 +1,6 @@
 """Llama-style LM trainer for 2xT4: fp16+GradScaler, DDP, WSD schedule, resume, EMA, Q4_0 QAT.
   torchrun --nproc_per_node=2 train/train.py --data DIR --out DIR [flags]
-Trunk: constant LR (stable phase of WSD). Branch (--branch_from CKPT): linear cooldown to 0 over
+Trunk: constant LR (stable phase of WSD). Branch (--branch_from CKPT): 1-sqrt cooldown over
 cooldown_frac * trunk steps, fresh optimizer with 100-step warmup (identical for every arm)."""
 import argparse, glob, json, os, sys, time
 import numpy as np, torch, torch.distributed as dist, torch.nn as nn
@@ -22,6 +22,7 @@ p.add_argument("--milestones", default="0.5e9,1e9,2e9,4e9")
 p.add_argument("--max_wall_min", type=float, default=660); p.add_argument("--ckpt_every_min", type=float, default=30)
 p.add_argument("--val_every", type=int, default=250); p.add_argument("--seed", type=int, default=0)
 p.add_argument("--branch_from"); p.add_argument("--cooldown_frac", type=float, default=0.2)
+p.add_argument("--final_lr_frac", type=float, default=0.0)
 p.add_argument("--ema", type=float, default=0); p.add_argument("--qat", action="store_true")
 p.add_argument("--max_steps", type=int, default=0)  # smoke tests
 a = p.parse_args()
@@ -100,7 +101,8 @@ net = DDP(raw, device_ids=[dev.index]) if ddp else raw
 def lr_at(s):
     if a.branch_from:
         w = min(1.0, (s - branch_start + 1) / 100)
-        return a.lr * w * (max(0.0, 1 - (s - trunk_steps) / cool_steps) if s >= trunk_steps else 1.0)
+        prog = min(1.0, max(0.0, (s - trunk_steps) / cool_steps))  # 1-sqrt cooldown (Dremov et al.)
+        return a.lr * w * (a.final_lr_frac + (1 - a.final_lr_frac) * (1 - prog ** 0.5) if s >= trunk_steps else 1.0)
     return a.lr * min(1.0, (s + 1) / a.warmup)
 
 def save(path, s):

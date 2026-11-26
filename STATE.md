@@ -9,6 +9,17 @@ Goal: execute docs/PLAN.md ("Does it survive Q4?"). Owner: Claude as CEO/operato
 ## In flight
 - Kaggle CPU kernel `kingkiller2164/wiki-slm-prep` (private) tokenizing wikimedia/wikipedia 20231101.en -> /kaggle/working/out (uint16 shards, meta.json). Pushed 2026-11-26; started RUNNING.
 
+## Decisions (2026-11-26)
+- Second research pass (docs/research-pass2.md) narrowed the claim; PREREG.md rewritten to v2 (still DRAFT). Trainer cooldown is now 1-sqrt with --final_lr_frac.
+- HF_TOKEN is NOT needed until final model upload; user adds it as a Kaggle Secret on the training notebook then.
+- Training kernel can use prep kernel output via kernel_sources (no local copy needed).
+
+## TODO from pass 2
+- C3 (post-hoc QAT) arm: needs a branch mode from a finished C0 final.pt (no optimizer state) - add --init_from.
+- Reserve cooldown/eval shards (check meta.json token total vs 4B trunk + 0.8B cooldown); separate imatrix calibration split; OOD eval set (FineWeb-Edu sample).
+- Pin llama.cpp commit; --pure quants; gguf-dump type table; fakequant bit-match test (max abs diff 0).
+- SmolLM2-135M/360M anchor through same eval; 3 seeds C0/C2 @20 tok/param.
+
 ## Next (in order)
 1. When prep COMPLETE: `kaggle kernels output kingkiller2164/wiki-slm-prep -p <dir>` check meta.json (~4-5B tokens, no id overlap), upload as Kaggle dataset `wiki-smollm2-u16` (private first).
 2. Phase 0 GPU kernel (T4x2, ~2h): measure tok/s (>=40k), torch.compile on sm_75?, LR sweep {1e-3,2e-3,4e-3} @80M tokens, resume test. Adjust --micro/--lr.

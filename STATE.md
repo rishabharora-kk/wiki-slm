@@ -31,3 +31,4 @@ Goal: execute docs/PLAN.md ("Does it survive Q4?"). Owner: Claude as CEO/operato
 (none)
 
 ## Log
+- 2026-11-26: prep COMPLETE (4.88B train tok). Phase 0 GPU kernel kingkiller2164/wiki-slm-phase0 pushed (T4x2, kernel_sources=prep; est ~2 GPU-h). Read its log/outputs next: tok/s, LR sweep val losses (lr1e-3/2e-3/4e-3), resume check.

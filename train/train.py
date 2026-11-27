@@ -15,7 +15,7 @@ p.add_argument("--data", required=True); p.add_argument("--out", required=True)
 p.add_argument("--d", type=int, default=512); p.add_argument("--L", type=int, default=8)
 p.add_argument("--ffn", type=int, default=1536); p.add_argument("--heads", type=int, default=8)
 p.add_argument("--kv", type=int, default=4); p.add_argument("--seq", type=int, default=1024)
-p.add_argument("--micro", type=int, default=16); p.add_argument("--global_batch", type=int, default=256)
+p.add_argument("--micro", type=int, default=8); p.add_argument("--global_batch", type=int, default=256)
 p.add_argument("--lr", type=float, default=2e-3); p.add_argument("--warmup", type=int, default=500)
 p.add_argument("--max_tokens", type=float, default=4e9)  # trunk length
 p.add_argument("--milestones", default="0.5e9,1e9,2e9,4e9")

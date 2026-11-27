@@ -7,3 +7,5 @@ runs/
 .env
 smoke/
 out_prep/
+out_prep/
+out_p0/

@@ -1,7 +1,7 @@
 """Trunk session: resumes from previous session's output (if any), trains for WALL minutes, saves ckpts."""
 import glob, os, shutil, subprocess
 os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "expandable_segments:True"
-WALL = int(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "wall.txt")).read())
+WALL = 170  # minutes; edit per session (Kaggle uploads only the code file)
 def sh(c): print("$", c, flush=True); return subprocess.run(c, shell=True).returncode
 sh("git clone --depth 1 https://github.com/rishabharora-kk/wiki-slm /kaggle/working/repo")
 D = os.path.dirname(glob.glob("/kaggle/input/**/meta.json", recursive=True)[0])

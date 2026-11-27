@@ -7,10 +7,10 @@ def q4_0(w: torch.Tensor) -> torch.Tensor:
     shp = w.shape
     x = w.float().reshape(-1, 32)
     mx = x.gather(1, x.abs().argmax(dim=1, keepdim=True))
-    d = (mx / -8).half().float()
+    d = mx / -8  # ggml quantizes with the unrounded fp32 scale ...
     inv = torch.where(d != 0, 1.0 / d, torch.zeros_like(d))
     q = (x * inv + 8.5).trunc().clamp(0, 15)
-    return ((q - 8) * d).reshape(shp).to(w.dtype)
+    return ((q - 8) * d.half().float()).reshape(shp).to(w.dtype)  # ... and stores/dequantizes with the fp16 scale
 
 
 def q4_0_ste(w):  # forward quantized, backward identity

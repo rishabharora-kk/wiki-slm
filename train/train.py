@@ -24,6 +24,7 @@ p.add_argument("--val_every", type=int, default=250); p.add_argument("--seed", t
 p.add_argument("--branch_from"); p.add_argument("--cooldown_frac", type=float, default=0.2)
 p.add_argument("--final_lr_frac", type=float, default=0.0)
 p.add_argument("--ema", type=float, default=0); p.add_argument("--qat", action="store_true")
+p.add_argument("--compile", action="store_true")
 p.add_argument("--max_steps", type=int, default=0)  # smoke tests
 a = p.parse_args()
 T_START = time.time()
@@ -97,6 +98,7 @@ if resume:
     if a.ema and ck["ema"] is not None: ema = ck["ema"]
     log("resumed at", step)
 net = DDP(raw, device_ids=[dev.index]) if ddp else raw
+if a.compile: net = torch.compile(net)
 
 def lr_at(s):
     if a.branch_from:

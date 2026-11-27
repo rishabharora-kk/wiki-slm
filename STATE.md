@@ -31,5 +31,6 @@ Goal: execute docs/PLAN.md ("Does it survive Q4?"). Owner: Claude as CEO/operato
 (none)
 
 ## Log
+- 2026-11-27: Phase 0 v2 COMPLETE (~1h GPU). 27k tok/s on T4x2 (target 40k MISSED -> 4B trunk = ~41h, over budget). LR sweep @78M tok val: 1e-3 5.721, 2e-3 5.720, 4e-3 5.778 -> use 2e-3. No instability (scale 65536). Resume works (continues sanely; not bit-compared). Next: speed kernel (compile, micro12), then rescope trunk to fit ~35 GPU-h.
 - 2026-11-27: Phase 0 v1 FAILED fast (~2.5 min GPU): CUDA OOM at --micro 16 (3GB fp32 logits). Fixed to micro 8, relaunched as v2 (commit 'Fix OOM'). GPU used so far: <0.1h.
 - 2026-11-26: prep COMPLETE (4.88B train tok). Phase 0 GPU kernel kingkiller2164/wiki-slm-phase0 pushed (T4x2, kernel_sources=prep; est ~2 GPU-h). Read its log/outputs next: tok/s, LR sweep val losses (lr1e-3/2e-3/4e-3), resume check.

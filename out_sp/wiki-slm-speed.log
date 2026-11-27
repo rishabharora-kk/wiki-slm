@@ -1,0 +1,21 @@
+[{"stream_name":"stdout","time":1.169343367,"data":"$ git clone --depth 1 https://github.com/rishabharora-kk/wiki-slm /kaggle/working/repo\n"}
+,{"stream_name":"stderr","time":1.209824816,"data":"Cloning into '/kaggle/working/repo'...\n"}
+,{"stream_name":"stdout","time":2.763910901,"data":"$ torchrun --nproc_per_node=2 /kaggle/working/repo/train/train.py --data /kaggle/input/notebooks/kingkiller2164/wiki-slm-prep/out --max_steps 120 --val_every 100000 --ckpt_every_min 999 --out /kaggle/working/base8 --micro 8 2\u003e\u00261 | grep -E 'tok/s|rror|OutOfMemory' | tail -4; echo ===base8\n"}
+,{"stream_name":"stdout","time":1413.115359314,"data":"step 50 loss 7.7201 lr 2.04e-04 scale 65536 tok/s 19746\n"}
+,{"stream_name":"stdout","time":1413.115430798,"data":"step 100 loss 6.2309 lr 4.04e-04 scale 65536 tok/s 25843\n"}
+,{"stream_name":"stdout","time":1413.165737701,"data":"===base8\n"}
+,{"stream_name":"stdout","time":1413.166046166,"data":"$ torchrun --nproc_per_node=2 /kaggle/working/repo/train/train.py --data /kaggle/input/notebooks/kingkiller2164/wiki-slm-prep/out --max_steps 120 --val_every 100000 --ckpt_every_min 999 --out /kaggle/working/compile8 --micro 8 --compile 2\u003e\u00261 | grep -E 'tok/s|rror|OutOfMemory' | tail -4; echo ===compile8\n"}
+,{"stream_name":"stdout","time":1960.515622193,"data":"step 50 loss 7.6868 lr 2.04e-04 scale 65536 tok/s 53048\n"}
+,{"stream_name":"stdout","time":1960.51566162,"data":"step 100 loss 6.2366 lr 4.04e-04 scale 65536 tok/s 65375\n"}
+,{"stream_name":"stdout","time":1960.565021183,"data":"===compile8\n"}
+,{"stream_name":"stdout","time":1960.565451849,"data":"$ torchrun --nproc_per_node=2 /kaggle/working/repo/train/train.py --data /kaggle/input/notebooks/kingkiller2164/wiki-slm-prep/out --max_steps 120 --val_every 100000 --ckpt_every_min 999 --out /kaggle/working/base12 --micro 12 --global_batch 288 2\u003e\u00261 | grep -E 'tok/s|rror|OutOfMemory' | tail -4; echo ===base12\n"}
+,{"stream_name":"stdout","time":3372.668520115,"data":"step 50 loss 7.7474 lr 2.04e-04 scale 65536 tok/s 25426\n"}
+,{"stream_name":"stdout","time":3372.668575271,"data":"step 100 loss 6.9492 lr 4.04e-04 scale 65536 tok/s 25253\n"}
+,{"stream_name":"stdout","time":3372.723895884,"data":"===base12\n"}
+,{"stream_name":"stderr","time":3374.883673177,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":3374.8837006,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":3375.127579448,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":3375.127605998,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":3375.941934691,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":3376.931121673,"data":"[NbConvertApp] Writing 276001 bytes to __results__.html\n"}
+]

@@ -31,6 +31,7 @@ Goal: execute docs/PLAN.md ("Does it survive Q4?"). Owner: Claude as CEO/operato
 (none)
 
 ## Log
+- 2026-11-27: Speed test: torch.compile = 65k tok/s (2.5x; same loss), micro 12 no gain. 4B trunk ~17 GPU-h fits. LAUNCHED trunk session 1 (kernel wiki-slm-trunk1, wall 170 min, lr 2e-3, micro 8, --compile, from scratch). Sessions chain: trunkN sources trunk(N-1) (kaggle/trunk/trunk.py carries ckpts via /kaggle/input/**/trunk/). Splits: val.bin = imatrix calibration, test.bin = sealed eval. GPU used so far ~1.5h (+ this session). QAT+compile untested.
 - 2026-11-27: Phase 0 v2 COMPLETE (~1h GPU). 27k tok/s on T4x2 (target 40k MISSED -> 4B trunk = ~41h, over budget). LR sweep @78M tok val: 1e-3 5.721, 2e-3 5.720, 4e-3 5.778 -> use 2e-3. No instability (scale 65536). Resume works (continues sanely; not bit-compared). Next: speed kernel (compile, micro12), then rescope trunk to fit ~35 GPU-h.
 - 2026-11-27: Phase 0 v1 FAILED fast (~2.5 min GPU): CUDA OOM at --micro 16 (3GB fp32 logits). Fixed to micro 8, relaunched as v2 (commit 'Fix OOM'). GPU used so far: <0.1h.
 - 2026-11-26: prep COMPLETE (4.88B train tok). Phase 0 GPU kernel kingkiller2164/wiki-slm-phase0 pushed (T4x2, kernel_sources=prep; est ~2 GPU-h). Read its log/outputs next: tok/s, LR sweep val losses (lr1e-3/2e-3/4e-3), resume check.

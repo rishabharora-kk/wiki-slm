@@ -1,0 +1,1 @@
+{"id":"kingkiller2164/wiki-slm-evalA","title":"wiki-slm-evalA","code_file":"eval.py","language":"python","kernel_type":"script","is_private":"true","enable_gpu":"false","enable_internet":"true","dataset_sources":[],"competition_sources":[],"kernel_sources":["kingkiller2164/wiki-slm-prep","kingkiller2164/wiki-slm-trunk3","kingkiller2164/wiki-slm-branchA"]}
